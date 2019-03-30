@@ -71,9 +71,6 @@ def getName(url):
     # we do not like canoodling
     title = title.lower()
 
-    # prints the name
-    print(title)
-
     # see if the name is in the title
     if productKeyWord in title:
 
@@ -110,7 +107,8 @@ if __name__ == '__main__':
     t = time.time() - t
 
     # print the correct url of the page that we want
-    print(checker.destinations)
+    for dest in checker.destinations:
+        print('Found url: {}'.format(dest))
 
     # print our time
     print('Retreived in {} seconds.'.format(t))
