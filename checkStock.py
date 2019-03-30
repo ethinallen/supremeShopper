@@ -17,10 +17,12 @@ class checker:
 # the base extension of the website domain that we are going to use
 url = 'https://supremenewyork.com/shop'
 
-# the string position for the url extension
+# the string positions of the url extension
+# sadd is to adjust for the length of the product
+# type adding to the length of the url
 sAdd = len(productType) * 2
-sPos = 29 + sAdd
-ePos = 38 + sAdd
+staPos = 29 + sAdd
+endPos = 38 + sAdd
 
 # function to get the extensions to the url
 def getExtensions(url):
@@ -50,6 +52,7 @@ def getExtensions(url):
         fullPath = (url + '/' + productType + '/' + exten)
         urlList.append(fullPath)
 
+    # returns the list of urls that we just found
     return urlList
 
 # this is our function
