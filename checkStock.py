@@ -1,12 +1,16 @@
-import time, threading, requests, string
+import time, threading, requests, string, json
 from bs4 import BeautifulSoup
 from datetime import datetime
 
+# read in all of our constants from details.json file
+with open('details.json') as data:
+    data = json.load(data)
+
 # this is the type of product that we want to get
-productType = 'jackets'
+productType = data['productType']
 
 # the name of the product that we are searching for
-name = 'north face'
+productKeyWord = data['productKeyWord']
 
 class checker:
 
@@ -44,7 +48,7 @@ def getExtensions(url):
     for a in soup.find_all('li', {'class' : productType }):
         for span in a.find_all('span', {'class' : 'new_item_tag'}):
             string = str(a)
-            string = string[sPos:ePos]
+            string = string[staPos:endPos]
             extenList.append(string)
 
     # populates the list of full urls that we need to go to
@@ -71,7 +75,7 @@ def getName(url):
     print(title)
 
     # see if the name is in the title
-    if name in title:
+    if productKeyWord in title:
 
         # assign the correct url to the checker's destination attribute
         checker.destinations.append(url)
