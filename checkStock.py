@@ -12,8 +12,9 @@ productType = data['productType']
 # the name of the product that we are searching for
 productKeyWord = data['productKeyWord']
 
+# always check the checker
 class checker:
-
+    # check check check check check
     def __init__(self):
         self.destinations = []
 
@@ -86,19 +87,19 @@ if __name__ == '__main__':
     # say we are starting our program for the boys back home
     print('STARTING PROGRAM')
 
-    # get our time so we can see how long the program takes
-    t = time.time()
-
     # get our list of url's
     urlList = getExtensions(url)
 
     # create a list of threads
     threads = [threading.Thread(target = getName, args = (url,)) for url in urlList]
 
+    # get our time so we can see how long the program takes
+    t = time.time()
+
     # start all threads
     for thread in threads:
         thread.start()
-    # join all threadsvii
+    # join all threads
     for thread in threads:
         thread.join()
 
