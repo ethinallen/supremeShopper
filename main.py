@@ -12,5 +12,10 @@ from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import checkStock
 
 class bot():
+
     def __init__(self):
+
+        # url that we are going to check
         self.checkURL = 'https://whatismyipaddress.com/'
+        self.shopURL = 'https://supremenewyork.com/shop'
+        self.proxyList = []
