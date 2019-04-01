@@ -101,7 +101,7 @@ if __name__ == '__main__':
         thread.start()
     # join all threads
     for thread in threads:
-
+        thread.join()
 
     # calculate how long it took to run the program
     t = time.time() - t
