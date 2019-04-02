@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 # read in all of our constants from details.json file
-with open('details.json') as data:
+with open('product.drew') as data:
     data = json.load(data)
 
 # this is the type of product that we want to get
@@ -76,16 +76,15 @@ def getName(url):
     if productKeyWord in title:
 
         # assign the correct url to the checker's destination attribute
+        # this is the only way that we can return anything from the thread
         checker.destinations.append(url)
-        # return url
 
-if __name__ == '__main__':
+# main function
+def main():
 
     # make a checker instance
+    global checker
     checker = checker()
-
-    # say we are starting our program for the boys back home
-    print('STARTING PROGRAM')
 
     # get our list of url's
     urlList = getExtensions(url)
@@ -93,9 +92,9 @@ if __name__ == '__main__':
     # create a list of threads
     threads = [threading.Thread(target = getName, args = (url,)) for url in urlList]
 
-    # get our time so we can see how long the program takes
-    t = time.time()
+    print('Starting Threads')
 
+    t = time.time()
     # start all threads
     for thread in threads:
         thread.start()
@@ -103,12 +102,12 @@ if __name__ == '__main__':
     for thread in threads:
         thread.join()
 
-    # calculate how long it took to run the program
-    t = time.time() - t
+    print('Done in {} seconds'.format(time.time() - t))
 
-    # print the correct url of the page that we want
-    for dest in checker.destinations:
-        print('Found url: {}'.format(dest))
+    # Only going to return the first element of the list
+    # if I don't then it is going to get too complicated for my tastes
+    # I should just make sure that I only get one result
+    destinations = checker.destinations[0]
 
-    # print our time
-    print('Retreived in {} seconds.'.format(t))
+    # return the destinations
+    return destinations
