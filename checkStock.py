@@ -80,7 +80,7 @@ def getName(url):
         checker.destinations.append(url)
 
 # main function
-def main():
+def checkStock():
 
     # make a checker instance
     global checker
