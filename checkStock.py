@@ -94,7 +94,9 @@ def main():
 
     print('Starting Threads')
 
+    # get the time
     t = time.time()
+
     # start all threads
     for thread in threads:
         thread.start()
@@ -102,6 +104,7 @@ def main():
     for thread in threads:
         thread.join()
 
+    # print the time
     print('Done in {} seconds'.format(time.time() - t))
 
     # Only going to return the first element of the list

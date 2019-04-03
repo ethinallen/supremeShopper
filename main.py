@@ -43,15 +43,39 @@ class bot():
     def createDriver(self, proxy):
         chrome_options = webdriver.ChromeOptions()
         chrome_options.add_argument('--proxy-server=http://%s' % proxy)
-        driver = webdriver.Chrome(chrome_options=chrome_options, executable_path='/users/drew/Projects/jubilantWaffle/chromedriver')
+        driver = webdriver.Chrome(options=chrome_options, executable_path='/users/drew/Projects/drivers/chromedriver73/chromedriver')
         self.driverDict[driver] = proxy
+        try:
+            driver.get('https://whatismyipaddress.com')
+        except exception as e:
+            print(e)
+
+    def createAllDrivers(self):
+        # what is the issue here..
+        for proxy in self.proxyList:
+            self.createDriver(proxy)
+
+
+        # # create a list of threads (we are going to be doing that a lot)
+        # threads = [threading.Thread(target = self.createDriver, args = (proxy)) for proxy in self.proxyList]
+        #
+        # # start and join all of the threads
+        # for thread in threads:
+        #     thread.start()
+        # for thread in threads:
+        #     thread.join()
 
     # is going to test all of our proxies to make sure that they work
     def testProxies(self):
         # will write a function to check single proxies and then thread it to test all proxies
-        return None
+        yield None
 
     # test our driver's proxy to make sure that it works
     def testDriver(driver):
         yield None
-    # def
+
+if __name__ == '__main__':
+    # create a bot instance
+    bot = bot()
+    # create all of the drivers
+    bot.createAllDrivers()
