@@ -1,6 +1,5 @@
 from selenium import webdriver
 import os
-import requests
 import bs4
 import re
 import time
@@ -12,7 +11,8 @@ import requests
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import checkStock
-import RandomHeaders
+
+# TODO: give each driver a user agent
 
 # returns our list of proxies
 def getProxies():
@@ -38,7 +38,18 @@ class bot():
         # our list of proxies
         self.proxyList = getProxies()
         # dictionary of every driver and its details
-        self.detailsList = []
+        self.driverList = []
+        # going to combine these two lists
+        self.listOfPaths = []
+        self.listOfTexts = []
+        # each text and path for every input field will become a dictionary for that field
+        self.listOfDicts = []
+
+    # create our list of dictionaries; each dict corresponds to a field
+    def createListOfDicts():
+        listOfTexts.append()
+        for i in range(0,len(listOfPaths)):
+            listOfDicts.append({'path' : listOfPaths[i], 'text' : listOfTexts[i]})
 
     # create a driver instance and append make a dictionary of drivers and details
     def createDriver(self, proxy):
@@ -48,15 +59,13 @@ class bot():
         chrome_options.add_argument('--proxy-server=http://%s' % proxy)
         # make the driver headless
         chrome_options.add_argument('headless')
-        # give the driver a useragent
-        header = RandomHeaders.LoadHeader()
         # make the driver
         driver = webdriver.Chrome(options=chrome_options, executable_path='/users/drew/Projects/drivers/chromedriver73/chromedriver')
         # eventually we are going to assign a header to the dirver and then add
         # that information to the dictionary of drivers
-        self.detailsList.append({'driver' : driver, 'proxy' : proxy, 'header' : header})
+        self.driverList.append({'driver' : driver, 'proxy' : proxy, 'header' : header})
         print('DRIVER INITIATED WITH PROXY {}'.format(proxy))
-
+        # try to get the page
         try:
             driver.get('https://whatismyipaddress.com')
             time.sleep(60)
@@ -65,6 +74,7 @@ class bot():
             driver.save_screenshot(ssName)
             driver.close()
 
+        # print the exception
         except Exception as e:
             print('DRIVER FAILED WITH EXCEPTION:    {}'.format(e))
             # closes the driver on exception
@@ -82,26 +92,25 @@ class bot():
             thread.join()
 
     # is going to test all of our proxies to make sure that they work
-    # def testProxy(self, proxy):
-    #     # testing this url to make sure that the response code is <200>
-    #     url = 'https://www.google.com'
-    #     # make the request
-    #     r = requests.get(url, proxy=proxy)
-    #     return r.status_code
-
-    # not going to use these functions right now because I can't issue a proxy
-    # to requests
-    # def testAllProxies(self):
-    #     statusCodes = [self.testProxy(proxy) for proxy in self.proxyList]
-    #     print(statusCodes)
-    #     for i, code in enumerate(statusCodes):
-    #         if code != 200:
-    #             self.proxyList.pop(i)
-    #     print()
-
-    # test our driver's proxy to make sure that it works
-    def testDriver(driver):
+    def testProxy(self, proxy):
         yield None
+
+    # function to test all of my proxies and see their response code
+    # will just be the threaded version of the testing of singular proxy
+    def testAllProxies(self):
+        yield None
+
+    # will submit a single field on the page
+    def clickButton(self, path, text):
+        button = driver.find_element_by_xpath(path)
+        button.send_keys(text)
+        return button
+
+    # will submit all of the fields on the page except for the exp date of cc
+    # and the process payment button (becuase order matters)
+    def clickAllButtons(self, listOfPaths):
+        buttonList = [threading.Thread(target=makeButton(), args=(dict[path], dict[text])) for dict in listOfDicts]
+
 
 if __name__ == '__main__':
     # create a bot instance
