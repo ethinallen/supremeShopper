@@ -18,7 +18,6 @@ class checker:
     def __init__(self):
         self.destinations = []
 
-
 # the base extension of the website domain that we are going to use
 url = 'https://supremenewyork.com/shop'
 
@@ -86,16 +85,16 @@ def checkStock():
     global checker
     checker = checker()
 
+    # get the time
+    t = time.time()
+
     # get our list of url's
     urlList = getExtensions(url)
 
     # create a list of threads
     threads = [threading.Thread(target = getName, args = (url,)) for url in urlList]
 
-    print('Starting Threads')
-
-    # get the time
-    t = time.time()
+    print('STARTING THREADS')
 
     # start all threads
     for thread in threads:
