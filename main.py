@@ -1,13 +1,12 @@
-from selenium import webdriver
 import os
 import bs4
-import re
 import time
-import selenium.webdriver
 import threading
 import sys
 import csv
 import requests
+from selenium import webdriver
+import selenium.webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import checkStock
@@ -50,9 +49,10 @@ class bot():
         self.listOfTexts = []
         # each text and path for every input field will become a dictionary for that field
         self.listOfDicts = []
+        # self.createListOfDicts()
 
     # create our list of dictionaries; each dict corresponds to a field
-    def createListOfDicts():
+    def createListOfDicts(self):
         self.listOfTexts.append()
         for i in range(0,len(self.listOfPaths)):
             self.listOfDicts.append({'path' : self.listOfPaths[i], 'text' : self.listOfTexts[i]})
@@ -61,7 +61,7 @@ class bot():
     def createAllDrivers(self):
 
         # create a driver instance and append make a dictionary of drivers and details
-        def createDriver(self, proxy):
+        def createDriver(proxy):
 
             # add options to our webdriver
             chrome_options = webdriver.ChromeOptions()
@@ -71,9 +71,9 @@ class bot():
             chrome_options.add_argument('headless')
             # make the driver
             driver = webdriver.Chrome(options=chrome_options, executable_path='/users/drew/Projects/drivers/chromedriver73/chromedriver')
-            # eventually we are going to assign a header to the dirver and then add
+
             # that information to the dictionary of drivers
-            self.driverList.append({'driver' : driver, 'proxy' : proxy, 'header' : header})
+            self.driverList.append({'driver' : driver, 'proxy' : proxy})
 
             print('DRIVER INITIATED WITH PROXY {}'.format(proxy))
 
@@ -93,7 +93,7 @@ class bot():
                 driver.close()
 
         # create a list of threads (we are going to be doing that a lot)
-        threads = [threading.Thread(target = self.createDriver, args = (proxy,)) for proxy in self.proxyList]
+        threads = [threading.Thread(target = createDriver, args = ((proxy,))) for proxy in self.proxyList]
 
         # start and join all of the threads
         startAndJoin(threads)
@@ -132,4 +132,4 @@ if __name__ == '__main__':
     bot = bot()
     # create all of the drivers
     bot.createAllDrivers()
-    # bot.testAllProxies()
+    print(bot.driverList)

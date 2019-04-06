@@ -85,9 +85,6 @@ def checkStock():
     global checker
     checker = checker()
 
-    # get the time
-    t = time.time()
-
     # get our list of url's
     urlList = getExtensions(url)
 
@@ -95,6 +92,9 @@ def checkStock():
     threads = [threading.Thread(target = getName, args = (url,)) for url in urlList]
 
     print('STARTING THREADS')
+
+    # get the time
+    t = time.time()
 
     # start all threads
     for thread in threads:
