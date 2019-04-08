@@ -1,16 +1,26 @@
+
 {
-  "name" : "//*[@id=\"order_billing_name\"]",
-  "email" : "//*[@id=\"order_email\"]",
-  "phone" : "//*[@id=\"order_tel\"]",
-  "address" : "//*[@id=\"bo\"]",
-  "aptNum" : "//*[@id=\"oba3\"]",
-  "zip" : "//*[@id=\"order_billing_zip\"]",
-  "city" : "//*[@id=\"order_billing_city\"]",
-  "state" : "//*[@id=\"order_billing_state\"]/option",
-  "ccNum" : "//*[@id=\"nnaerb\"]",
-  "expMonth" : "//*[@id=\"credit_card_month\"]/option",
-  "expYear" : "//*[@id=\"credit_card_year\"]/option",
-  "cvv" : "//*[@id=\"orcer\"]",
-  "termsAndCond" : "//*[@id=\"cart-cc\"]/fieldset/p[2]/label/div/ins",
-  "processPayment" : "//*[@id=\"pay\"]/input"
+  "checkout" : {
+    "name" : "//*[@id=\"order_billing_name\"]",
+    "email" : "//*[@id=\"order_email\"]",
+    "phone" : "//*[@id=\"order_tel\"]",
+    "address" : "//*[@id=\"bo\"]",
+    "aptNum" : "//*[@id=\"oba3\"]",
+    "zip" : "//*[@id=\"order_billing_zip\"]",
+    "city" : "//*[@id=\"order_billing_city\"]",
+    "state" : "//*[@id=\"order_billing_state\"]/option",
+    "ccNum" : "//*[@id=\"nnaerb\"]",
+    "expMonth" : "//*[@id=\"credit_card_month\"]/option",
+    "expYear" : "//*[@id=\"credit_card_year\"]/option",
+    "cvv" : "//*[@id=\"orcer\"]",
+    "termsAndCond" : "//*[@id=\"cart-cc\"]/fieldset/p[2]/label/div/ins",
+    "processPayment" : "//*[@id=\"pay\"]/input"
+  },
+  "captcha" : {
+    "selectAudio" : "//*[@id=\"recaptcha-audio-button\"]",
+    "play" : "//*[@id=\":4\"]",
+    "download" : "/html/body/div/div/div[6]/a",
+    "entryField" : "//*[@id=\"audio-response\"]"
+  }
+
 }
