@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from datetime import datetime
 
 # read in all of our constants from details.json file
-with open('product.drew') as data:
+with open('product.json') as data:
     data = json.load(data)
 
 # this is the type of product that we want to get

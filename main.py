@@ -27,7 +27,7 @@ def getProxies():
     proxies = []
 
     # read in our proxies and return them
-    with open('/users/drew/Projects/proxies/proxies.csv') as f:
+    with open('proxies.csv') as f:
         f = csv.reader(f)
         for elem in f:
             for proxy in elem:
@@ -51,11 +51,34 @@ class bot():
         self.listOfDicts = []
         # self.createListOfDicts()
 
+    # set up all of the submission fields on the checkout page
+    # there is probably a better way to do this but it's too late
+    def populatePaths():
+        with open('checkoutPaths.json') as data:
+            data = json.load(data)
+        # adds each field
+        self.listOfPaths.append(data['name'])
+        self.listOfPaths.append(data['email'])
+        self.listOfPaths.append(data['phone'])
+        self.listOfPaths.append(data['address'])
+        self.listOfPaths.append(data['aptNum'])
+        self.listOfPaths.append(data['zip'])
+        self.listOfPaths.append(data['city'])
+        self.listOfPaths.append(data['state'])
+        self.listOfPaths.append(data['ccNum'])
+        self.listOfPaths.append(data['expMonth'])
+        self.listOfPaths.append(data['expYear'])
+        self.listOfPaths.append(data['cvv'])
+        self.listOfPaths.append(data['termsAndCond'])
+        self.listOfPaths.append(data['processPayment'])
+
     # create our list of dictionaries; each dict corresponds to a field
     def createListOfDicts(self):
+        self.populateTexts()
         self.listOfTexts.append()
-        for i in range(0,len(self.listOfPaths)):
+        for i in range(0,len(self.listOfTexts)):
             self.listOfDicts.append({'path' : self.listOfPaths[i], 'text' : self.listOfTexts[i]})
+        print(listOfDicts)
 
     # create all of our driver instances
     def createAllDrivers(self):
@@ -70,7 +93,7 @@ class bot():
             # make the driver headless
             chrome_options.add_argument('headless')
             # make the driver
-            driver = webdriver.Chrome(options=chrome_options, executable_path='/users/drew/Projects/drivers/chromedriver73/chromedriver')
+            driver = webdriver.Chrome(options=chrome_options, executable_path='/home/drew/Projects/chromedrivers/chromedriver73/chromedriver')
 
             # that information to the dictionary of drivers
             self.driverList.append({'driver' : driver, 'proxy' : proxy})
@@ -79,8 +102,8 @@ class bot():
 
             # try to get the page
             try:
-                driver.get('https://whatismyipaddress.com')
-                time.sleep(60)
+                driver.get(self.shopURL)
+                time.sleep(30)
                 ssName = str(proxy)
                 ssName = ssName.strip(':') + '.png'
                 driver.save_screenshot(ssName)
@@ -110,7 +133,7 @@ class bot():
 
     # will submit all of the fields on the page except for the exp date of cc
     # and the process payment button (becuase order matters)
-    def clickAllButtons(self, listOfPaths):
+    def clickAllButtons(self, path):
 
         # will submit a single field on the page
         def clickButton(self, path, text):
