@@ -10,8 +10,8 @@
     "city" : "//*[@id=\"order_billing_city\"]",
     "state" : "//*[@id=\"order_billing_state\"]/option",
     "ccNum" : "//*[@id=\"nnaerb\"]",
-    "expMonth" : "//*[@id=\"credit_card_month\"]/option",
-    "expYear" : "//*[@id=\"credit_card_year\"]/option",
+    "expMonth" : "//*[@id=\"credit_card_month\"]/option[1]",
+    "expYear" : "//*[@id=\"credit_card_year\"]/option[1]",
     "cvv" : "//*[@id=\"orcer\"]",
     "termsAndCond" : "//*[@id=\"cart-cc\"]/fieldset/p[2]/label/div/ins",
     "processPayment" : "//*[@id=\"pay\"]/input"

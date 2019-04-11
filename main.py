@@ -4,6 +4,7 @@ import time
 import threading
 import sys
 import csv
+import json
 import requests
 from selenium import webdriver
 import selenium.webdriver
@@ -53,9 +54,10 @@ class bot():
 
     # set up all of the submission fields on the checkout page
     # there is probably a better way to do this but it's too late
-    def populatePaths():
+    def populatePaths(self):
         with open('checkoutPaths.json') as data:
             data = json.load(data)
+            data = data['checkout']
         # adds each field
         self.listOfPaths.append(data['name'])
         self.listOfPaths.append(data['email'])
@@ -103,11 +105,6 @@ class bot():
             # try to get the page
             try:
                 driver.get(self.shopURL)
-                time.sleep(30)
-                ssName = str(proxy)
-                ssName = ssName.strip(':') + '.png'
-                driver.save_screenshot(ssName)
-                driver.close()
 
             # print the exception
             except Exception as e:
@@ -131,9 +128,54 @@ class bot():
         yield None
 
 
-    # will submit all of the fields on the page except for the exp date of cc
-    # and the process payment button (becuase order matters)
-    def clickAllButtons(self, path):
+    # will submit all of the fields on the page
+    # and get us to the captcha
+    def clickAllButtons(self, driver):
+
+        # I am going to write a much cleaner way to execute this later
+        # but right now I am under the gun and I have no standards
+        # the world can judge me for writing it this way idc :^)
+
+        # read in our checkout paths from our json of paths
+        with open('checkoutPaths.json') as data:
+            data = json.load(data)
+            data = data['checkout']
+
+        # load all of my super secret payment information
+        with open('payment.json') as data:
+            data = json.load(data)
+            drew = data['drew']
+
+        nameButton = driver.find_element_by_xpath(data['name'])
+        nameButton.send_keys(drew['name'])
+        emailButton = driver.find_element_by_xpath(data['email'])
+        emailButton.send_keys(drew['email'])
+        numberButton = driver.find_element_by_xpath(data['number'])
+        numberButton.send_keys(drew['number'])
+        addressButton = driver.find_element_by_xpath(data['address'])
+        addressButton.send_keys(drew['address'])
+        zipButton = driver.find_element_by_xpath(data['zip'])
+        zipButton.send_keys(drew['zip'])
+        cityButton = driver.find_element_by_xpath(data['city'])
+        cityButton.send_keys(drew['city'])
+        ccNumButton = driver.find_element_by_xpath(data['ccnum'])
+        ccNumButton.send_keys(drew['ccnum'])
+        cvvButton = driver.find_element_by_xpath(data['cvv'])
+        cvvButton.send_keys(drew['cvv'])
+
+        # we have to 'click' these buttons rather than submit them
+        # because these are drop down menus
+        expMonthButton = driver.find_element_by_xpath(data['expMonth'])
+        expMonthButton.click()
+        expYearButton = driver.find_element_by_xpath(data['expMonth'])
+        expYearButton.click()
+        termsAndCondButton = driver.find_element_by_xpath(data['termsAndCond'])
+        termsAndCondButton.click()
+        processPaymentButton = driver.find_element_by_xpath(data['processPayment'])
+
+
+
+
 
         # will submit a single field on the page
         def clickButton(self, path, text):
@@ -155,4 +197,14 @@ if __name__ == '__main__':
     bot = bot()
     # create all of the drivers
     bot.createAllDrivers()
-    print(bot.driverList)
+
+    # this is about to get super messy because I have not thought this through
+    # all of the way yet
+
+    # we have to wait for the time to be correct
+    while True:
+        t = datetime.now().minute
+        if t == 45:
+            for driver in bot.driverList:
+                driver.get(checkStock.checkStock())
+                clickAllButtons(driver)
