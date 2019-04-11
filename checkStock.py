@@ -1,6 +1,5 @@
 import time, threading, requests, string, json
 from bs4 import BeautifulSoup
-from datetime import datetime
 
 # read in all of our constants from details.json file
 with open('product.json') as data:

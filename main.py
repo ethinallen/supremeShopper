@@ -6,6 +6,7 @@ import sys
 import csv
 import json
 import requests
+from datetime import datetime
 from selenium import webdriver
 import selenium.webdriver
 from selenium.webdriver.common.keys import Keys
@@ -41,6 +42,7 @@ class bot():
         # url that we are going to check
         self.checkURL = 'https://whatismyipaddress.com/'
         self.shopURL = 'https://supremenewyork.com/shop'
+        self.checkoutURL = 'https://supremenewyork.com/shop/cart'
         # our list of proxies
         self.proxyList = getProxies()
         # dictionary of every driver and its details
@@ -93,7 +95,9 @@ class bot():
             # add the proxy to the driver
             chrome_options.add_argument('--proxy-server=http://%s' % proxy)
             # make the driver headless
-            chrome_options.add_argument('headless')
+            # chrome_options.add_argument('headless')
+            # give the driver a user Agent
+            chrome_options.add_argument('user-agent = Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_0; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.307.11 Safari/532.9')
             # make the driver
             driver = webdriver.Chrome(options=chrome_options, executable_path='/home/drew/Projects/chromedrivers/chromedriver73/chromedriver')
 
@@ -143,7 +147,7 @@ class bot():
 
         # load all of my super secret payment information
         with open('payment.json') as data:
-            data = json.load(data)
+            drew = json.load(data)
             drew = data['drew']
 
         nameButton = driver.find_element_by_xpath(data['name'])
@@ -173,23 +177,35 @@ class bot():
         termsAndCondButton.click()
         processPaymentButton = driver.find_element_by_xpath(data['processPayment'])
 
+        # # will submit a single field on the page
+        # def clickButton(self, path, text):
+        #     try:
+        #         button = driver.find_element_by_xpath(path)
+        #         button.send_keys(text)
+        #     except Exception as e:
+        #         print('FAILED TO SUBMIT WITH ERROR: {}'.format(e))
+        #     return button
+        #
+        # # populate a list of threads
+        # threads = [threading.Thread(target=makeButton(), args=(dict[path], dict[text])) for dict in listOfDicts]
+        #
+        # # start and join all of the threads
+        # startAndJoin(threads)
 
 
+    # this is our 'final approach' function, getting close to landing
+    def finalApproach(self, driver):
+        # get the url of the item that we want
+        driver.get(url)
+        # add the item to our cart (i am going to clean this up later)
+        checkout = driver.find_element_by_xpath('/html/body/div/div/div[2]/div/form/fieldset[2]/input')
+        checkout.click()
+        driver.get(bot.checkoutURL)
+        self.clickAllButtons(driver)
 
-
-        # will submit a single field on the page
-        def clickButton(self, path, text):
-            try:
-                button = driver.find_element_by_xpath(path)
-                button.send_keys(text)
-            except Exception as e:
-                print('FAILED TO SUBMIT WITH ERROR: {}'.format(e))
-            return button
-
-        # populate a list of threads
-        threads = [threading.Thread(target=makeButton(), args=(dict[path], dict[text])) for dict in listOfDicts]
-
-        # start and join all of the threads
+    # the main function of the bot
+    def main(self):
+        threads = [threading.Thread(target = self.finalApproach, args = (driver['driver'],)) for driver in self.driverList]
         startAndJoin(threads)
 
 if __name__ == '__main__':
@@ -198,13 +214,13 @@ if __name__ == '__main__':
     # create all of the drivers
     bot.createAllDrivers()
 
+    print('CREATED ALL DRIVERS')
+
     # this is about to get super messy because I have not thought this through
     # all of the way yet
+    global url
+    url = checkStock.checkStock()
 
-    # we have to wait for the time to be correct
-    while True:
-        t = datetime.now().minute
-        if t == 45:
-            for driver in bot.driverList:
-                driver.get(checkStock.checkStock())
-                clickAllButtons(driver)
+    print('FOUND URL {}'.format(url))
+
+    bot.main()
