@@ -48,33 +48,7 @@ class bot():
         # dictionary of every driver and its details
         self.driverList = []
         # going to combine these two lists into the dictionary
-        self.listOfPaths = []
-        self.listOfTexts = []
-        # each text and path for every input field will become a dictionary for that field
-        self.listOfDicts = []
-        # self.createListOfDicts()
-
-    # set up all of the submission fields on the checkout page
-    # there is probably a better way to do this but it's too late
-    def populatePaths(self):
-        with open('checkoutPaths.json') as data:
-            data = json.load(data)
-            data = data['checkout']
-        # adds each field
-        self.listOfPaths.append(data['name'])
-        self.listOfPaths.append(data['email'])
-        self.listOfPaths.append(data['phone'])
-        self.listOfPaths.append(data['address'])
-        self.listOfPaths.append(data['aptNum'])
-        self.listOfPaths.append(data['zip'])
-        self.listOfPaths.append(data['city'])
-        self.listOfPaths.append(data['state'])
-        self.listOfPaths.append(data['ccNum'])
-        self.listOfPaths.append(data['expMonth'])
-        self.listOfPaths.append(data['expYear'])
-        self.listOfPaths.append(data['cvv'])
-        self.listOfPaths.append(data['termsAndCond'])
-        self.listOfPaths.append(data['processPayment'])
+        self.listOfFields = []
 
     # create our list of dictionaries; each dict corresponds to a field
     def createListOfDicts(self):
@@ -95,7 +69,7 @@ class bot():
             # add the proxy to the driver
             chrome_options.add_argument('--proxy-server=http://%s' % proxy)
             # make the driver headless
-            # chrome_options.add_argument('headless')
+            chrome_options.add_argument('headless')
             # give the driver a user Agent
             chrome_options.add_argument('user-agent = Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_0; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.307.11 Safari/532.9')
             # make the driver
@@ -134,7 +108,7 @@ class bot():
 
     # will submit all of the fields on the page
     # and get us to the captcha
-    def clickAllButtons(self, driver):
+    def submitAllFields(self, driver):
 
         # I am going to write a much cleaner way to execute this later
         # but right now I am under the gun and I have no standards
@@ -150,48 +124,24 @@ class bot():
             drew = json.load(data)
             drew = data['drew']
 
-        nameButton = driver.find_element_by_xpath(data['name'])
-        nameButton.send_keys(drew['name'])
-        emailButton = driver.find_element_by_xpath(data['email'])
-        emailButton.send_keys(drew['email'])
-        numberButton = driver.find_element_by_xpath(data['number'])
-        numberButton.send_keys(drew['number'])
-        addressButton = driver.find_element_by_xpath(data['address'])
-        addressButton.send_keys(drew['address'])
-        zipButton = driver.find_element_by_xpath(data['zip'])
-        zipButton.send_keys(drew['zip'])
-        cityButton = driver.find_element_by_xpath(data['city'])
-        cityButton.send_keys(drew['city'])
-        ccNumButton = driver.find_element_by_xpath(data['ccnum'])
-        ccNumButton.send_keys(drew['ccnum'])
-        cvvButton = driver.find_element_by_xpath(data['cvv'])
-        cvvButton.send_keys(drew['cvv'])
+        def submitInformation():
 
-        # we have to 'click' these buttons rather than submit them
-        # because these are drop down menus
-        expMonthButton = driver.find_element_by_xpath(data['expMonth'])
-        expMonthButton.click()
-        expYearButton = driver.find_element_by_xpath(data['expMonth'])
-        expYearButton.click()
-        termsAndCondButton = driver.find_element_by_xpath(data['termsAndCond'])
-        termsAndCondButton.click()
-        processPaymentButton = driver.find_element_by_xpath(data['processPayment'])
+            for key in data:
+                self.listOfFields.append({key: data[key])
 
-        # # will submit a single field on the page
-        # def clickButton(self, path, text):
-        #     try:
-        #         button = driver.find_element_by_xpath(path)
-        #         button.send_keys(text)
-        #     except Exception as e:
-        #         print('FAILED TO SUBMIT WITH ERROR: {}'.format(e))
-        #     return button
-        #
-        # # populate a list of threads
-        # threads = [threading.Thread(target=makeButton(), args=(dict[path], dict[text])) for dict in listOfDicts]
-        #
-        # # start and join all of the threads
-        # startAndJoin(threads)
+            def submitField(field):
+                type = field['type']
+                path = field['path']
+                interaction = driver.find_element_by_xpath(path)
 
+                if type == 'textEntry':
+                    interaction.send_keys(drew[field])
+                if type == 'dropdown':
+
+                    yield None
+                if type == 'button'
+                    nameButton = driver.find_element_by_xpath(data['name'])
+                    yield None
 
     # this is our 'final approach' function, getting close to landing
     def finalApproach(self, driver):

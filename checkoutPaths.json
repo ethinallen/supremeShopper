@@ -1,26 +1,80 @@
 
 {
   "checkout" : {
-    "name" : "//*[@id=\"order_billing_name\"]",
-    "email" : "//*[@id=\"order_email\"]",
-    "phone" : "//*[@id=\"order_tel\"]",
-    "address" : "//*[@id=\"bo\"]",
-    "aptNum" : "//*[@id=\"oba3\"]",
-    "zip" : "//*[@id=\"order_billing_zip\"]",
-    "city" : "//*[@id=\"order_billing_city\"]",
-    "state" : "//*[@id=\"order_billing_state\"]/option",
-    "ccNum" : "//*[@id=\"nnaerb\"]",
-    "expMonth" : "//*[@id=\"credit_card_month\"]/option[1]",
-    "expYear" : "//*[@id=\"credit_card_year\"]/option[1]",
-    "cvv" : "//*[@id=\"orcer\"]",
-    "termsAndCond" : "//*[@id=\"cart-cc\"]/fieldset/p[2]/label/div/ins",
-    "processPayment" : "//*[@id=\"pay\"]/input"
+    "name" : {
+      "path" : "//*[@id=\"order_billing_name\"]",
+      "type" : "textEntry"
+    },
+    "email" : {
+      "path" : "//*[@id=\"order_email\"]",
+      "type" : "textEntry"
+    },
+    "phone" : {
+      "path" : "//*[@id=\"order_tel\"]",
+      "type" : "textEntry"
+    },
+    "address" : {
+      "path" : "//*[@id=\"bo\"]",
+      "type" : "textEntry"
+    },
+    "aptNum" : {
+      "path" : "//*[@id=\"oba3\"]",
+      "type" : "textEntry"
+    },
+    "zip" : {
+      "path" : "//*[@id=\"order_billing_zip\"]",
+      "type" : "textEntry"
+    },
+    "city" : {
+      "path" : "//*[@id=\"order_billing_city\"]",
+      "type" : "textEntry"
+    },
+    "state" : {
+      "path" : "//*[@id=\"order_billing_state\"]/option",
+      "type" : "dropdown"
+    },
+    "ccNum" : {
+      "path" : "//*[@id=\"nnaerb\"]",
+      "type" : "textEntry"
+    },
+    "expMonth" : {
+      "path" : "//*[@id=\"credit_card_month\"]/option[1]",
+      "type" : "dropdown"
+    },
+    "expYear" : {
+      "path" : "//*[@id=\"credit_card_year\"]/option[1]",
+      "type" : "dropdown"
+    },
+    "cvv" : {
+      "path" : "//*[@id=\"orcer\"]",
+      "type" : "dropdown"
+    },
+    "termsAndCond" : {
+      "path" : "//*[@id=\"cart-cc\"]/textEntryset/p[2]/label/div/ins",
+      "type" : "button"
+    },
+    "processPayment" : {
+      "path" : "//*[@id=\"pay\"]/input",
+      "type" : "button"
+    }
   },
   "captcha" : {
-    "selectAudio" : "//*[@id=\"recaptcha-audio-button\"]",
-    "play" : "//*[@id=\":4\"]",
-    "download" : "/html/body/div/div/div[6]/a",
-    "entryField" : "//*[@id=\"audio-response\"]"
+    "selectAudio" : {
+      "path" : "//*[@id=\"recaptcha-audio-button\"]",
+      "type" : "button"
+    },
+    "play" : {
+      "path" : "//*[@id=\":4\"]",
+      "type" : "button"
+    },
+    "download" : {
+      "path" : "/html/body/div/div/div[6]/a",
+      "type" : "button"
+    },
+    "entrytextEntry" : {
+      "path" : "//*[@id=\"audio-response\"]",
+      "type" : "textEntry"
+    }
   }
 
 }
