@@ -13,8 +13,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 import checkStock
 
-# TODO: give each driver a user agent
-
 # the function a list of threads; start and join all of them
 def startAndJoin(threads):
     for thread in threads:
@@ -143,7 +141,7 @@ class bot():
                     nameButton = driver.find_element_by_xpath(data['name'])
                     yield None
 
-    # this is our 'final approach' function, getting close to landing
+    # this is our 'final approach' function
     def finalApproach(self, driver):
         # get the url of the item that we want
         driver.get(url)
