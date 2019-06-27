@@ -40,6 +40,7 @@ class bot():
         # url that we are going to check
         self.checkURL = 'https://whatismyipaddress.com/'
         self.shopURL = 'https://supremenewyork.com/shop'
+        self.itemURL = None
         self.checkoutURL = 'https://supremenewyork.com/shop/cart'
         # our list of proxies
         self.proxyList = getProxies()
@@ -144,7 +145,7 @@ class bot():
     # this is our 'final approach' function
     def finalApproach(self, driver):
         # get the url of the item that we want
-        driver.get(url)
+        driver.get(self.itemURL)
         # add the item to our cart (i am going to clean this up later)
         checkout = driver.find_element_by_xpath('/html/body/div/div/div[2]/div/form/fieldset[2]/input')
         checkout.click()
@@ -164,11 +165,8 @@ if __name__ == '__main__':
 
     print('CREATED ALL DRIVERS')
 
-    # this is about to get super messy because I have not thought this through
-    # all of the way yet
-    global url
-    url = checkStock.checkStock()
+    bot.itemURL = checkStock.checkStock()
 
-    print('FOUND URL {}'.format(url))
+    print('FOUND URL {}'.format(bot.itemURL))
 
     bot.main()
