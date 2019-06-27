@@ -71,7 +71,7 @@ class bot():
             # give the driver a user Agent
             chrome_options.add_argument('user-agent = Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10_6_0; en-US) AppleWebKit/532.9 (KHTML, like Gecko) Chrome/5.0.307.11 Safari/532.9')
             # make the driver
-            driver = webdriver.Chrome(options=chrome_options, executable_path='/home/drew/Projects/chromedrivers/chromedriver73/chromedriver')
+            driver = webdriver.Chrome(options=chrome_options, executable_path='/home/drew/projects/drivers/geckoedriver')
 
             # that information to the dictionary of drivers
             self.driverList.append({'driver' : driver, 'proxy' : proxy})
@@ -125,7 +125,7 @@ class bot():
         def submitInformation():
 
             for key in data:
-                self.listOfFields.append({key: data[key])
+                self.listOfFields.append({key: data[key]})
 
             def submitField(field):
                 type = field['type']
@@ -137,7 +137,7 @@ class bot():
                 if type == 'dropdown':
 
                     yield None
-                if type == 'button'
+                if type == 'button':
                     nameButton = driver.find_element_by_xpath(data['name'])
                     yield None
 
